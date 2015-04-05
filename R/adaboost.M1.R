@@ -33,15 +33,15 @@ pred<- data.frame(rep(0,n))
 
 for (m in 1:mfinal) {
 #Creamos muestras boostrap utilizando los pesos
-
+cat(sprintf("building tree %03i at %s\n", m, Sys.time())) # print message for each tree
 if (boos==TRUE) {
-            k <- 1		#Gracias a Ignacio Medina 2014-11-06; Evitamos arboles sin ningún corte
+            k <- 1		#Gracias a Ignacio Medina 2014-11-06; Evitamos arboles sin ningÃºn corte
             while (k == 1){
             
             boostrap <- sample(1:n, replace = TRUE, prob = pesos)
             fit <- rpart(formula, data = data[boostrap, -1], control = control)
             k <- length(fit$frame$var)
-            }	#Hasta aquí Gracias a Ignacio Medina 2014-11-06
+            }	#Hasta aquÃ­ Gracias a Ignacio Medina 2014-11-06
 		#La solucion I. Medina con boos=FALSE puede no converger
 
 
@@ -51,7 +51,7 @@ err<- sum(pesos*ind)         #Calcula el error ponderado en esa iteracion
 
 }
 
-#limitamos el tamaño del arbol para que sean distintos?
+#limitamos el tamaÃ±o del arbol para que sean distintos?
 if (boos==FALSE) {
 	w<<- pesos
   	    fit <- rpart(formula=formula, data=data[,-1], weights=w, control=control) 
@@ -145,7 +145,7 @@ for (i in 1:nlevels(vardep)){
 }
 
 predclass <- rep("O",n)
-#2014-11-12 ¿Se puede hacer esto usando apply para evitar el bucle? 
+#2014-11-12 Â¿Se puede hacer esto usando apply para evitar el bucle? 
 #Creo la funcion "select" que en caso de empate devuelva la clase mayoritaria de entre las empatadas
 predclass[]<-apply(classfinal,1,FUN=select, vardep=vardep)
 
